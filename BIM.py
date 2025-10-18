@@ -24,17 +24,18 @@ def menu():
   print('Invalid menu selection.')
 
  os.system('clear')
-
- if menu_choice == '1':
-  add_book()
- if menu_choice == '2':
-  view_books()
- if menu_choice == '3':
-  search_book()
- if menu_choice == '4':
-  delete_book()
- if menu_choice == '5':
-  quit()
+ 
+ match(menu_choice):
+  case '1':
+    add_book()
+  case '2':
+    view_books()
+  case '3':
+    search_book()
+  case '4':
+    delete_book()
+  case '5':
+    quit()
 
 def add_book():
  title = input('Enter the title of the book: ')
