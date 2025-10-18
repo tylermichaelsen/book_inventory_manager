@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import platform
 import time
 import database as db
 
@@ -10,7 +11,7 @@ def main():
 
 
 def menu():
- os.system('clear')
+ clear_screen()
  print(f'Book Inventory Manager')
  print(f'----------------------')
  print(f'1) Add a book to the database')
@@ -23,8 +24,8 @@ def menu():
  while (menu_choice := input('Select an option: ')) not in ['1','2','3','4','5']:
   print('Invalid menu selection.')
 
- os.system('clear')
- 
+ clear_screen()
+
  match(menu_choice):
   case '1':
     add_book()
@@ -61,14 +62,14 @@ def search_book():
  while (search_field := input().lower()) not in ['t','a']:
   print(f'The option you chose was invalid.')
   print(search_field)
- os.system('clear')
+ clear_screen()
 
  if search_field == 't':
   search_string = input('Enter the title of the book to search for: ')
  elif search_field == 'a':
   search_string = input('Enter the author of the book to search for: ')
  search_query = db.search_record(search_string, search_field)
- os.system('clear')
+ clear_screen()
  display_heading()
  for row in search_query:
   print(f'{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}')
@@ -77,7 +78,7 @@ def search_book():
 
 def delete_book():
  deletion = input('Enter the ISBN of the book you wish to delete: ')
- os.system('clear')
+ clear_screen()
  db.delete_record(deletion)
  input('Press enter to continue.')
  menu()
@@ -85,6 +86,15 @@ def delete_book():
 def display_heading():
  print(f'Title\tAuthor\tYear\tISBN')
  print('-----------------------------')
+
+def clear_screen():
+ match(platform.system()):
+    case 'Linux':
+        os.system('clear')
+    case 'Darwin':
+        os.system('clear')
+    case 'Windows':
+        os.system('cls')
 
 if __name__ == '__main__':
  main()
